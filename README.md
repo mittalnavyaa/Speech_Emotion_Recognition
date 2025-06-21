@@ -1,41 +1,57 @@
-# Speech Emotion Recognition Project
+# 🎙️ Speech Emotion Recognition Project
 
-## Overview
-This repository contains code for Speech Emotion Recognition (SER) using pre-trained models and three popular emotional speech datasets: RAVDESS, MELD, and CREMAD. The project processes audio files, extracts features using a pre-trained wav2vec2 model, and performs emotion classification.
+## 📖 Overview
+This repository contains code for **Speech Emotion Recognition (SER)** using a pre-trained wav2vec2 model and three popular emotional speech datasets: **RAVDESS**, **MELD**, and **CREMA-D**. The project processes raw audio files, extracts features using a pre-trained model, and performs emotion classification.
 
-## Datasets
+---
 
-### RAVDESS (Ryerson Audio-Visual Database of Emotional Speech and Song)
-- Download from: [Zenodo link](https://zenodo.org/record/1188976#.YO6yI-gzaUk)
-- Contains 24 professional actors (12 male, 12 female) vocalizing two lexically-matched statements
-- Includes 8 emotions: neutral, calm, happy, sad, angry, fearful, disgust, surprised
+## 📂 Datasets Used
 
-### MELD (Multimodal Emotion Lines Dataset)
-- Contains dialogue utterances from the TV series Friends
-- Includes 7 emotions: anger, disgust, sadness, joy, neutral, surprise, fear
+### 🔹 RAVDESS (Ryerson Audio-Visual Database of Emotional Speech and Song)
+- Download: [https://zenodo.org/record/1188976](https://zenodo.org/record/1188976)
+- Contains recordings from 24 professional actors (12 male, 12 female)
+- 2 lexically-matched statements spoken with:
+  - **8 emotions**: `neutral`, `calm`, `happy`, `sad`, `angry`, `fearful`, `disgust`, `surprised`
 
-### CREMAD (Crowd-sourced Emotional Multimodal Actors Dataset)
-- Contains 7,442 clips from 91 actors
-- Includes 6 emotions: anger, disgust, fear, happy, neutral, sad
+### 🔹 MELD (Multimodal EmotionLines Dataset)
+- Download: [https://www.kaggle.com/datasets/zaber666/meld-dataset](https://www.kaggle.com/datasets/zaber666/meld-dataset)
+- Dialogue utterances from the TV series *Friends*
+- **7 emotions**: `anger`, `disgust`, `sadness`, `joy`, `neutral`, `surprise`, `fear`
 
-## Pre-trained Model
-We use the `ehcalabres/wav2vec2-lg-xlsr-en-speech-emotion-recognition` model from Hugging Face, which is a large-scale wav2vec2 model pre-trained for speech emotion recognition.
+### 🔹 CREMA-D (Crowd-sourced Emotional Multimodal Actors Dataset)
+- Download: [https://www.kaggle.com/datasets/ejlok1/cremad](https://www.kaggle.com/datasets/ejlok1/cremad)
+- 7,442 clips from 91 actors
+- **6 emotions**: `anger`, `disgust`, `fear`, `happy`, `neutral`, `sad`
 
-## Files Description
+---
 
-### Preprocessing Scripts
-1. `preprocess_RAVDESS.py` - Processes raw RAVDESS audio files into features for training
-2. `preprocess_MELD.py` - Processes MELD dataset audio files
-3. `preprocess_CREMAD.py` - Processes CREMAD dataset audio files
+## 🤖 Pre-trained Model
+We use the [**ehcalabres/wav2vec2-lg-xlsr-en-speech-emotion-recognition**](https://huggingface.co/ehcalabres/wav2vec2-lg-xlsr-en-speech-emotion-recognition) model from Hugging Face, which is a large-scale wav2vec2 model fine-tuned for emotion recognition from speech.
 
-### Testing Scripts
-1. `test_RAVDESS.py` - Tests emotion recognition performance on RAVDESS dataset
-2. `test_MELD.py` - Tests emotion recognition performance on MELD dataset
-3. `test_CREMAD.py` - Tests emotion recognition performance on CREMAD dataset
+---
 
-### Additional Scripts
-1. `Moviescope_wav.py` - Contains utility functions for audio processing and feature extraction
+## 📜 Files Description
 
-## Requirements
+### 🔧 Preprocessing Scripts
+- `preprocess_RAVDESS.py` – Processes RAVDESS dataset into model-ready features
+- `preprocess_MELD.py` – Processes MELD dataset audio
+- `preprocess_CREMAD.py` – Processes CREMA-D audio clips
+- `preprocess_MovieScope.py` – Prepares audio for genre/emotion correlation
+
+### 🔍 Testing Scripts
+- `test_RAVDESS.py` – Evaluates SER model on RAVDESS
+- `test_MELD.py` – Evaluates model on MELD
+- `test_CREMAD.py` – Evaluates model on CREMA-D
+
+### 🛠️ Additional Scripts
+- `Moviescope_wav.py` – Utility functions for audio processing
+- `Moviescope_results_extraction.py` – Helper for result analysis
+
+---
+
+## 📦 Requirements
+
+Install dependencies using pip:
+
 ```bash
 pip install torch transformers librosa numpy pandas tqdm
