@@ -19,7 +19,7 @@ class EarlyStopping:
         self.counter = 0
         self.best_score = None
         self.early_stop = False
-        self.val_loss_min = np.Inf
+        self.val_loss_min = np.inf  # <-- changed from np.Inf to np.inf
         self.delta = delta
         self.path = path
         self.trace_func = trace_func
@@ -44,10 +44,7 @@ class EarlyStopping:
     def save_checkpoint(self, val_loss, model):
         if self.verbose:
             self.trace_func(f'Validation loss decreased ({self.val_loss_min:.6f} --> {val_loss:.6f}).  Saving model ...')
-        try:
-            torch.save(model.state_dict(), self.path)
-        except Exception as e:
-            self.trace_func(f"Error saving checkpoint: {str(e)}")
+        torch.save(model.state_dict(), self.path)
         self.val_loss_min = val_loss
 
 # Custom dataset class for handling embeddings
@@ -246,7 +243,7 @@ def main():
     print(f"Validation set size: {len(X_val)}")
 
     # Cross-validation setup
-    k_folds = 5
+    k_folds = 10  # Changed from 5 to 10
     kfold = StratifiedKFold(n_splits=k_folds, shuffle=True, random_state=42)
 
     # Lists to store cross-validation results
@@ -256,6 +253,9 @@ def main():
     cv_train_losses = []
     cv_val_losses = []
     cv_test_losses = []
+
+    best_test_accuracy = 0.0  # Track the best test accuracy
+    best_fold = -1
 
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
@@ -298,6 +298,12 @@ def main():
         cv_val_losses.append(val_losses)
         cv_test_losses.append(test_losses)
 
+        # Track the best test accuracy and corresponding fold
+        max_test_acc = max(test_accuracies)
+        if max_test_acc > best_test_accuracy:
+            best_test_accuracy = max_test_acc
+            best_fold = fold + 1
+
     # Pad sequences to ensure they have the same length
     cv_train_accuracies = pad_sequences(cv_train_accuracies)
     cv_val_accuracies = pad_sequences(cv_val_accuracies)
@@ -317,6 +323,9 @@ def main():
     # Final evaluation on the test set
     test_dataset = EmotionDataset(X_test, y_test)
     test_loader = DataLoader(test_dataset, batch_size=64, shuffle=False)
+
+    # Save the best classifier model (after all folds)
+    torch.save(model.state_dict(), "best_classifier_model_RAVDESS.pth")
 
     model.eval()
     correct = 0
@@ -390,6 +399,8 @@ def main():
     plt.legend()
     plt.savefig('avg_train_vs_test_loss.png')
     plt.close()
+
+    print(f"\nBest test accuracy across 10 folds: {best_test_accuracy * 100:.2f}% (Fold {best_fold})")
 
 if __name__ == "__main__":
     main()

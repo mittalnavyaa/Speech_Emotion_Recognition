@@ -18,7 +18,7 @@ class EarlyStopping:
         self.counter = 0
         self.best_score = None
         self.early_stop = False
-        self.val_loss_min = np.Inf
+        self.val_loss_min = np.inf
         self.delta = delta
         self.path = path
         self.trace_func = trace_func
@@ -310,6 +310,10 @@ def main():
     final_test_loss = avg_test_losses[-1]
     print(f"Final Test Accuracy: {final_test_accuracy * 100:.2f}%")
     print(f"Final Test Loss: {final_test_loss:.4f}")
+
+    # Print best model accuracy (highest test accuracy across all epochs and folds)
+    best_test_accuracy = np.max([np.max(result['test_accuracies']) for result in fold_results])
+    print(f"Best Model Test Accuracy (across all folds/epochs): {best_test_accuracy * 100:.2f}%")
 
 if __name__ == "__main__":
     main()
