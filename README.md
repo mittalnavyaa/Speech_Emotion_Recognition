@@ -30,6 +30,18 @@ We use the [**ehcalabres/wav2vec2-lg-xlsr-en-speech-emotion-recognition**](https
 
 ---
 
+## 📊 Results
+
+| Dataset   | Best Accuracy (%) | Final Test Accuracy (%) | Test Loss |
+|-----------|-------------------|--------------------------|-----------|
+| RAVDESS   | 94.10             | 93.75                    | 0.2225    |
+| CREMA-D   | 70.38             | 55.47                    | 0.6943    |
+| MELD      | 61.26             | 52.79                    | 1.2936    |
+
+> 📌 *Best Accuracy* refers to the highest test accuracy observed across all epochs or folds during training.
+
+---
+
 ## 📜 Files Description
 
 ### 🔧 Preprocessing Scripts
